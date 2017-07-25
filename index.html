@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="css/style.css">
+		<title>今世缘婚庆现场</title>
+		<style type="text/css">
+			
+			.st0{fill:black;stroke:red;stroke-miterlimit:10;}
+			
+			.mask div {
+				position: absolute;
+				/*弹幕的字体的大小*/
+				font-size: 20px;
+				/*定义粗体字符*/
+				font-weight: bold;
+				/* 规定段落文本不换行*/
+				white-space: nowrap;
+				line-height: 40px;
+				z-index: 40;
+			}
+
+		</style>
+		
+		
+		<script type="text/javascript" src="../jsy/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../jsy/js/operatorString.js"></script>
+
+		<script type="text/javascript">
+			$(function () {
+		        $(".heartPic li").hover(function () {
+		            $(this).addClass("on");
+		            $(this).find("img").animate({ "width": "120px", "height": "120px" });
+		            $(this).find("div").animate({ "width": "120px", "height": "120px" });
+		            $(this).find(".pTxt").animate({ "width": "120px", "height": "50px" });
+		            $(this).find("p").addClass("showDiv");
+		        }, function () {
+		            $(this).animate({ height: "60px" }, 100).removeClass("on");
+		            $(this).find("img").stop(true, true).animate({ "width": "62px", "height": "62px" });
+		            $(this).find("div").stop(true, true).animate({ "width": "62px", "height": "62px" });
+		            $(this).find(".pTxt").stop(true, true).animate({ "width": "0px", "height": "0px" });
+		        });
+		    })
+			setInterval("runDanmu()",10000);
+			//滚动祝福语
+			function runDanmu(){
+				
+				/*样式：右边是20像素 上边0像素 透明度值为1 getRandomColor()是随机生成颜色赋予text*/
+			   // var _lable = $("<div style='right:20px;top:0px;opacity:1;color:" + getRandomColor() + ";'>" + text + "</div>");
+				/*append给.mask后面添加lable.隐藏元素 .show()显示被隐藏的元素*/
+				//$(".mask").append(_lable.show());
+				//执行init_barrage();动作
+				//init_barrage();
+				var arry = [
+					'百年好合百年好合百年好合百年好合百年好合百年好合百年好合',
+					'新婚快乐新婚快乐新婚快乐新婚快乐新婚快乐新婚快乐',
+					'sfafafafafaf',
+					"slow",
+					"sldfjlajljalfka",
+					"早生贵子"
+				];
+				for(var i=0;i<arry.length;i++){
+				var text = arry[i];
+				var ss = getLength(arry[i]);
+				debugger;
+					/*样式：右边是20像素 上边0像素 透明度值为1 getRandomColor()是随机生成颜色赋予text*/
+					var _lable = $("<div style='text-align:center;padding:5px 15px;border-radius:30px;font-size:30px;20px;width:"+ (getLength(arry[i])+3)*12 +"px;overflow:hidden;right:-20px;top:0px;opacity:1;background-color:" + getRandomColor() + ";'><span style='color:#ffffff;'>" + arry[i] + "</span></div>");
+					/*append给.mask后面添加lable.隐藏元素 .show()显示被隐藏的元素*/
+					$(".mask").append(_lable.show());
+					//执行init_barrage();动作
+					init_barrage();
+				}
+			}
+						//初始化弹幕技术
+			function init_barrage() {
+				/*声明变量_top为0*/
+				var _top = 0;
+				/*弹幕遍历不隐藏 .each遍历*/
+				$(".mask div").show().each(function() {
+					/*$(window).width()获取当前窗口的宽度(不包含滚动条)减去字体的宽*/
+					//浏览器最大宽度，作为定位left的值
+					//var _left = $(window).width() - $(this).width();
+					var _left = $(window).width();
+					//浏览器最大高度
+					var _height = $(window).height();
+					/*_top = 75+_top 弹幕之间每次加75的距离*/
+					_top += 75;
+					/*如果(_top 大于等于 (_height -130))*/
+					if (_top >= (_height - 130)) {
+						/*则0赋予_top*/
+						_top = 0;
+					}
+					/*将css中left、top、color转换为jquery对象*/
+					$(this).css({
+						left: _left,
+						top: _top,
+						color: getRandomColor()
+					});
+					//定时弹出文字
+					var time = 15000;
+					/*idnex()方法返回指定元素相对于其他指定元素的index位置 index()除以2余数为0*/
+					if ($(this).index() % 2 == 0) {
+						/*则时间为15000*/
+						time = 20000;
+					}
+					/*animate()方法执行css属性集的自定义动画。*/
+					$(this).animate({
+						left: "-" + _left + "px"
+					},
+					time,
+					function() {
+						/*remove()方法移除被选元素，包括所有的文本和子节点*/
+						$(this).remove();
+					});
+				});
+			}
+			//获取随机颜色
+			function getRandomColor() {
+				return '#' + (function(h) {
+					return new Array(7 - h.length).join("0") + h
+				})((Math.random() * 0x1000000 << 0).toString(16))
+			}
+		</script>
+	</head>
+	<body>
+		<div class="big_bg">
+			<span class="love_bg"></span>
+			<div class="svg">
+				<!--<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+		 viewBox="0 50 500 500" style="enable-background:new 0 50 500 300;" xml:space="preserve">
+					
+					<path d="M249 130
+							C255 110 150 20 120 150
+							C265 90 180 50 200 100
+							C285 50 200 20 200 100
+							Z
+							"
+							style="fill:white;stroke:red;stroke-width:2"/>-->
+				<div class="mask">
+					<!-- 内容在这里显示 -->
+				</div>
+				<div class="heartPic">
+			    	<ul>
+			          	<li>
+			              	<div class="in">
+			                  	<img src="images/prize.jpg" />
+			              	</div>
+			          	</li>
+				        <li>
+				            <div class="in">
+				                <img src="images/prize.jpg" />
+				            </div>
+				        </li>
+				        <li>
+				            <div class="in">
+				                <img src="images/prize.jpg" />
+				            </div>
+				        </li>
+			      	</ul>
+			        <ul>
+			          	<li>
+			              	<div class="in">
+			                  	<img src="images/prize.jpg" />
+			              	</div>
+			          	</li>
+			          	<li>
+			              	<div class="in">
+			                  	<img src="images/prize.jpg" />
+			              	</div>
+			          	</li>
+			          	<li>
+			              	<div class="in">
+			                  	<img src="images/prize.jpg" />
+			              	</div>
+			          	</li>
+			          	<li>
+			              	<div class="in">
+			                  	<img src="images/prize.jpg" />
+			              	</div>
+			          	</li>
+			      	</ul>
+				    <ul>
+				        <li>
+				            <div class="in">
+				                <img src="images/prize.jpg" />
+				            </div>
+				        </li>
+				        <li>
+				            <div class="in">
+				                <img src="images/prize.jpg" />
+				            </div>
+				        </li>
+				        <li>
+				            <div class="in">
+				                <img src="images/prize.jpg" />
+				            </div>
+				        </li>
+				        <li>
+				            <div class="in">
+				                <img src="images/prize.jpg" />
+				            </div>
+				        </li>
+				        <li>
+				            <div class="in">
+				                <img src="images/prize.jpg" />
+				            </div>
+				        </li>
+				    </ul>
+				    <ul>
+			          	<li>
+			              	<div class="in">
+			                  	<img src="images/prize.jpg" />
+			              	</div>
+			            </li>
+			            <li>
+			              	<div class="in">
+			                  	<img src="images/prize.jpg" />
+			              	</div>
+			          	</li>
+			          	<li>
+			              	<div class="in">
+			                  	<img src="images/prize.jpg" />
+			              	</div>
+			          	</li>
+			          	<li>
+			              	<div class="in">
+			                  	<img src="images/prize.jpg" />
+			              	</div>
+			          	</li>
+			          	<li>
+			              	<div class="in">
+			                  	<img src="images/prize.jpg" />
+			              	</div>
+			          	</li>
+			          	<li></li>
+			      	</ul>
+			      	<ul>
+			          	<li>
+			              	<div class="in">
+			                  	<img src="images/prize.jpg" />
+			              	</div>
+			            </li>
+			            <li>
+			              	<div class="in">
+			                  	<img src="images/prize.jpg" />
+			              	</div>
+			            </li>
+			          	<li>
+			              	<div class="in">
+			                  	<img src="images/prize.jpg" />
+			              	</div>
+			          	</li>
+			          	<li>
+			              	<div class="in">
+			                  	<img src="images/prize.jpg" />
+			              	</div>
+			          	</li>
+			          	<li>
+			              	<div class="in">
+			                  	<img src="images/prize.jpg" />
+			              	</div>
+			          	</li>
+			      	</ul>
+			      	<ul>
+			          	<li>
+			              	<div class="in">
+			                  	<img src="images/prize.jpg" />
+			              	</div>
+			          	</li>
+			          	<li>
+			              	<div class="in">
+			                  	<img src="images/prize.jpg" />
+			              	</div>
+			          	</li>
+			          	<li>
+			              	<div class="in">
+			                  	<img src="images/prize.jpg" />
+			              	</div>
+			          	</li>
+			          	<li>
+			              	<div class="in">
+			                  	<img src="images/prize.jpg" />
+			              	</div>
+			          	</li>
+			      	</ul>
+               		<ul>
+			          	<li>
+			              	<div class="in">
+			                  	<img src="images/prize.jpg" />
+			              	</div>
+			          	</li>
+			          	<li>
+			              	<div class="in">
+			                  	<img src="images/prize.jpg" />
+			              	</div>
+			          	</li>
+			          	<li>
+			              	<div class="in">
+			                  	<img src="images/prize.jpg" />
+			              	</div>
+			          	</li>
+			      	</ul>
+				</div>
+
+					
+				<!--</svg>-->
+				
+			</div>
+		<!--	<marquee direction="left" scrolldelay="100" class="wish"><span></span>祝福祝福  祝祝福福  福祝福语 福福祝祝<span></span></marquee> -->
+		<!--	<marquee direction="left" scrolldelay="180" scrollamount="10" class="wish"><span></span>cdfdfdf  祝祝福福  福祝福语 福福祝祝<span></span></marquee> -->
+		</div>
+	</body>
+</html>

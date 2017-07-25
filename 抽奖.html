@@ -1,0 +1,305 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="css/style.css">
+		
+		<link rel="stylesheet" href="css/swiper.min.css">
+		<title>今世缘婚庆现场</title>
+		<style type="text/css">
+			.slotMachineButton {
+
+			}
+			.slotMachineButton {
+			
+			}
+			.slotMachine {
+				overflow: hidden;
+				display: inline-block;
+				border: 5px solid red;
+				background: url(../images/cj_border.png) no-repeat 50% 50%;
+				background-size: 94%;
+				width: 131px;
+				height: 180px;
+				max-height: 163px;
+				box-sizing: border-box;
+				padding: 10px;
+				background: white;
+			}
+			.game_box{
+				margin: 0;
+				padding: 0;
+				border: 0;
+				list-style: none;
+				text-align: center;
+				margin-top: 42px;
+			}
+			.pic{
+				width: 95px;
+				height: 95px;
+				text-align: center;
+				margin-bottom: 8px;
+				overflow: hidden;
+			}
+			.start_and_stop{
+				display:flex;
+				width: 50%;
+				margin: auto;
+			}
+			.nick{
+				width:90%;
+				text-align:center;
+				overflow:hidden;
+			}
+		</style>
+		
+				<script src="js/jquery.js"></script>
+		
+		<script src="js/swiper.min.js"></script>
+
+		
+
+		
+	</head>
+	<body>
+		<div class="big_bg">
+			<div class="color_bg">
+				<div style="width: 1000px; height: 1070px; margin: auto;">
+					<span class="cj_title"></span>
+					<div class="cj_box">
+						<div class="grade"></div>
+						<div class="game_box">
+							<div id="machine4" class="slotMachine swiper-container" >
+								<div class="swiper-wrapper">
+									<div class="swiper-slide">
+										<div class="pic">
+											<img src="../jsy/images/prize.jpg">
+										</div>
+										<span class="nick">貂蝉吧啦吧啦</span>
+									</div>
+								</div>
+							</div>
+													
+							<div id="machine5"  class="slotMachine swiper-container2" >
+								<div class="swiper-wrapper">
+									<div class="swiper-slide">
+										<div class="pic">
+											<img src="../jsy/images/prize.jpg">
+										</div>
+										<span class="nick">貂蝉吧啦吧啦</span>
+									</div>
+									
+								</div>
+							</div>
+							<div id="machine6" class="slotMachine swiper-container3" >
+								<div class="swiper-wrapper">
+									<div class="swiper-slide">
+										<div class="pic">
+											<img src="../jsy/images/prize.jpg">
+										</div>
+										<span class="nick">貂蝉吧啦吧啦</span>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="start_and_stop">
+						<div id="slotMachineButtonShuffle" class="start_off_btn"><text class="button_text">开始</text></div>
+						<div id="slotMachineButtonStop" class="start_off_btn"><text  class="button_text">停止</text></div>
+						<!--<button id="slotMachineButtonShuffle" class="start_off_btn"></button>
+						<button id="slotMachineButtonStop" class="start_off_btn"></button> -->
+					<div>
+				</div>
+			</div>
+		</div>
+	
+
+		<!-- 中奖弹窗 -->
+		<div class="tan_window" style="display:none;">
+			<div class="window_bg">
+				<button class="close_btn"></button>
+				<p class="text1">恭喜XXX获得</p>
+				<p class="text2">xxx等奖</p>
+			</div>
+		</div>
+	
+	</body>
+		
+<script>
+	var weddingId = "${weddingId}";
+	//奖品等级 
+	var prizeArray = [
+		'一等奖',
+		'二等奖',
+		'三等奖',
+		'四等奖',
+		'五等奖',
+		'六等奖',
+	];
+	
+	var swiper = new Swiper('.swiper-container', {
+		direction: 'vertical',
+		scrollbarHide:true,
+		freeMode:true,
+		freeModeMomentumRatio:1,
+		loop: true,
+		autoplay:false,
+		speed:100
+	});
+	var swiper2 = new Swiper('.swiper-container2', {
+		direction: 'vertical',
+		scrollbarHide:true,
+		freeMode:true,
+		freeModeMomentumRatio:1,
+		loop: true,
+		autoplay:false,
+		speed:100
+	});
+	var swiper3 = new Swiper('.swiper-container3', {
+		direction: 'vertical',
+		scrollbarHide:true,
+		freeMode:true,
+		freeModeMomentumRatio:1,
+		loop: true,
+		autoplay:false,
+		speed:100
+	});
+	
+	$(function() {
+			//关闭弹窗
+			$('.close_btn').click(function(e) {
+				$('.tan_window').fadeOut();
+			});
+			//开始滚动
+			$("#slotMachineButtonShuffle").click(function(){
+				  getBlessUserList();
+			});
+			//停止滚动并抽奖	
+			$("#slotMachineButtonStop").click(function(){
+				if(swiper!=null && swiper.autoplaying){
+					//打开弹窗
+					$('.text1').text("数据加载中请稍后...");
+					$('.text2').text("");
+					$('.tan_window').fadeIn();
+					//重置swiper的内容
+					$("#machine4").html(getDefaultStr());
+					swiper = null;
+					//抽奖
+					getDraws();
+				} else {
+					if(swiper2!=null && swiper2.autoplaying){
+						//打开弹窗
+						$('.text1').text("数据加载中请稍后...");
+						$('.text2').text("");
+						$('.tan_window').fadeIn();
+						//重置swiper2的内容
+						$("#machine5").html(getDefaultStr());
+						swiper2 = null;
+						//抽奖
+						getDraws();
+					} else {
+						if(swiper3!=null && swiper3.autoplaying){
+							//打开弹窗
+							$('.text1').text("数据加载中请稍后...");
+							$('.text2').text("");
+							$('.tan_window').fadeIn();
+							//重置swiper3的内容
+							$("#machine6").html(getDefaultStr());
+							swiper3 = null;
+							//抽奖
+							getDraws();
+						}
+					}
+				}
+			});
+	 });
+   
+	//启动开始按钮
+	function getBlessUserList(){
+		var str = '<div class="swiper-wrapper">';
+			str += 	'<div class="swiper-slide">';
+			str += 		'<div class="pic">';
+			str += 			'<img src="../jsy/images/prize.jpg">';
+			str += 		'</div>';
+			str += 		'<span class="nick">阿木木</span>';
+			str +=	'</div>';
+			str +='</div>';
+			
+			$("#machine4").html(str);
+			$("#machine5").html(str);
+			$("#machine6").html(str);
+			
+		    swiper = new Swiper('.swiper-container', {
+				direction: 'vertical',
+				scrollbarHide:true,
+				freeMode:true,
+				freeModeMomentumRatio:1,
+				loop: true,
+				autoplay:1,
+				speed:100
+			});
+			
+			swiper2 = new Swiper('.swiper-container2', {
+				direction: 'vertical',
+				scrollbarHide:true,
+				freeMode:true,
+				freeModeMomentumRatio:1,
+				loop: true,
+				autoplay:1,
+				speed:100
+			});
+			swiper3 = new Swiper('.swiper-container3', {
+				direction: 'vertical',
+				scrollbarHide:true,
+				freeMode:true,
+				freeModeMomentumRatio:1,
+				loop: true,
+				autoplay:1,
+				speed:100
+			});
+		
+	}
+   
+   //抽奖
+   function getDraws(){
+		$.ajax({ 
+			url: "${request.contextPath}/interaction/draws",
+			type: "POST",
+			data:{"weddingId":weddingId},
+			async:false,
+			timeout: 50000, //超时时间：5秒
+			success: function(data){
+				if(data.errCode=='0000'){
+					$('.text1').text("恭喜"+data.blessing.nick+"获得");
+					$('.text2').text(prizeArray[data.prizeConfig.level]);
+				}else{
+					$('.text1').text("So Sorry");
+					$('.text2').text(data.resultMsg);
+				}
+				$('.tan_window').fadeIn();
+			},
+			error : function(data){
+				$('.text1').text("So Sorry");
+				$('.text2').text("请重新抽奖！");
+				$('.tan_window').fadeIn();
+			}
+		});
+   }
+
+    //获取默认字符串
+	function getDefaultStr(){
+		var str = '<div class="swiper-wrapper">';
+			str += 	'<div class="swiper-slide">';
+			str += 		'<div class="pic">';
+			str += 			'<img src="../jsy/images/prize.jpg">';
+			str += 		'</div>';
+			str += 		'<span class="nick">阿木木</span>';
+			str +=	'</div>';
+			str +='</div>';
+		return str;
+	}
+
+</script>
+</html>
